@@ -1,0 +1,33 @@
+n = int(input("Enter number of processes: "))
+
+processes = []
+for i in range(n):
+    pid = i + 1
+    at = int(input(f"Enter Arrival Time of P{pid}: "))
+    bt = int(input(f"Enter Burst Time of P{pid}: "))
+    processes.append([pid, at, bt])
+
+# Sort processes by Arrival Time
+processes.sort(key=lambda x: x[1])
+
+ct = 0
+total_wt = 0
+total_tat = 0
+
+print("\nPID\tAT\tBT\tCT\tTAT\tWT")
+
+for p in processes:
+    pid, at, bt = p
+    if ct < at:
+        ct = at
+    ct += bt
+    tat = ct - at
+    wt = tat - bt
+
+    total_wt += wt
+    total_tat += tat
+
+    print(f"{pid}\t{at}\t{bt}\t{ct}\t{tat}\t{wt}")
+
+print("\nAverage Waiting Time:", total_wt / n)
+print("Average Turnaround Time:", total_tat / n)
